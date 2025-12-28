@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Satyam Trip - Best Taxi Service in Varanasi for Kashi Darshan, Ayodhya, Prayagraj & Outstation.">
+    <title>Satyam Trip | Varanasi Taxi & Tour Service</title>
+    
+    <link rel="icon" type="image/png" href="img/favicon.PNG">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandBlue: '#1e3a8a',
+                        brandOrange: '#f97316',
+                        brandDark: '#0f172a',
+                        brandDarkBg: '#111827',
+                        brandGreen: '#25D366',
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; width: 0; height: 2px;
+            bottom: -4px; left: 0; background-color: #f97316;
+            transition: width 0.3s ease-in-out;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* --- HERO SLIDER CSS --- */
+        .hero-slide {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        .hero-slide.active { opacity: 1; z-index: 1; }
+
+        /* --- TOUR SLIDER CSS --- */
+        .tour-slide {
+            opacity: 0; 
+            transition: opacity 1s ease-in-out;
+            position: absolute; 
+            inset: 0; 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover;
+            z-index: 0;
+        }
+        .tour-slide.active { 
+            opacity: 1; 
+            z-index: 10;
+        }
+        
+        /* Tour Content Animation */
+        .tour-content {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+        .tour-slide.active .tour-content {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.3s;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-700 antialiased bg-gray-50">
+
+    <div class="bg-brandDarkBg text-gray-300 py-2 text-sm hidden md:block">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="flex space-x-6">
+                <a href="mailto:satyamtri2025@gmail.com" class="hover:text-brandOrange transition flex items-center"><i class="fas fa-envelope mr-2 text-brandOrange"></i>satyamtri2025@gmail.com</a>
+                <span class="flex items-center"><i class="fas fa-clock mr-2 text-brandOrange"></i>24/7 Service Availability</span>
+            </div>
+            <div class="flex space-x-4">
+                <a href="https://wa.me/917080792422" class="hover:text-green-400 transition"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                <a href="#" class="hover:text-blue-400 transition"><i class="fab fa-facebook"></i> Facebook</a>
+            </div>
+        </div>
+    </div>
+
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm shadow-md transition-all duration-300">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-extrabold text-brandBlue flex items-center tracking-tight">
+                <i class="fas fa-route text-brandOrange mr-2"></i> SATYAM<span class="text-brandOrange">TRIP</span>
+            </a>
+
+            <div class="hidden md:flex space-x-8 font-semibold text-brandDark">
+                <a href="#home" class="nav-link hover:text-brandOrange transition">Home</a>
+                <a href="#tours" class="nav-link hover:text-brandOrange transition">Tours</a>
+                <a href="#pricing" class="nav-link hover:text-brandOrange transition">Pricing</a>
+                <a href="#about" class="nav-link hover:text-brandOrange transition">About</a>
+                <a href="#contact" class="nav-link hover:text-brandOrange transition">Contact</a>
+            </div>
+
+            <div class="hidden md:block">
+                <a href="tel:+917080792422" class="bg-brandOrange text-white px-6 py-2.5 rounded-full font-bold hover:bg-orange-700 transition shadow-lg flex items-center animate-pulse hover:animate-none">
+                    <i class="fas fa-phone-alt mr-2 animate-wiggle"></i> +91 7080792422
+                </a>
+            </div>
+
+            <button id="mobile-menu-btn" class="md:hidden text-brandDark text-2xl focus:outline-none">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t p-4 flex flex-col space-y-4 shadow-lg">
+            <a href="#home" class="block hover:text-brandOrange font-medium">Home</a>
+            <a href="#tours" class="block hover:text-brandOrange font-medium">Tours</a>
+            <a href="#pricing" class="block hover:text-brandOrange font-medium">Pricing</a>
+            <a href="#about" class="block hover:text-brandOrange font-medium">About</a>
+            <a href="#contact" class="block hover:text-brandOrange font-medium">Contact</a>
+        </div>
+    </header>
+
+    <section id="home" class="h-[90vh] flex items-center text-center px-4 relative overflow-hidden group">
+        <div class="absolute inset-0 -z-10 bg-black">
+            <div class="absolute inset-0 bg-black/60 z-20"></div>
+            <img src="photo/ertiga.png" class="hero-slide active" alt="Car 1">
+            <img src="photo/innovacrusta.jpg" class="hero-slide" alt="Car 2">
+            <img src="img/dzire new.jpeg" class="hero-slide" alt="Car 3">
+        </div>
+
+        <button onclick="moveHeroSlide(-1)" class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-50 bg-white/20 hover:bg-brandOrange text-white p-3 rounded-full backdrop-blur-md transition-all duration-300">
+            <i class="fas fa-chevron-left text-xl"></i>
+        </button>
+        <button onclick="moveHeroSlide(1)" class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-50 bg-white/20 hover:bg-brandOrange text-white p-3 rounded-full backdrop-blur-md transition-all duration-300">
+            <i class="fas fa-chevron-right text-xl"></i>
+        </button>
+
+        <div class="container mx-auto relative z-30">
+            <div data-aos="fade-down" data-aos-duration="800">
+                 <span class="bg-brandOrange/90 backdrop-blur text-white px-5 py-2 rounded-full text-sm uppercase tracking-wider font-bold mb-6 inline-flex items-center shadow-lg border border-white/20">
+                    <i class="fas fa-check-circle mr-2"></i> Best Taxi Service in Varanasi
+                </span>
+            </div>
+            <h1 data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000" class="text-4xl md:text-7xl font-extrabold text-white mb-6 leading-tight drop-shadow-2xl">
+                Safe & Reliable <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-brandOrange to-yellow-400">Taxi Services</span> 24/7
+            </h1>
+            <p data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000" class="text-gray-200 text-lg md:text-2xl mb-12 max-w-3xl mx-auto font-light leading-relaxed">
+                Book Outstation Cabs, Airport Transfers, and Luxury Tempo Travellers at affordable rates.
+            </p>
+            <div data-aos="zoom-in" data-aos-delay="600" data-aos-duration="1000" class="flex flex-col sm:flex-row justify-center gap-6">
+                <a href="https://wa.me/917080792422?text=Hi,%20I%20want%20to%20book%20a%20taxi." class="bg-brandGreen text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-600 transition shadow-xl transform hover:-translate-y-1 flex items-center justify-center border-2 border-transparent">
+                    <i class="fab fa-whatsapp text-2xl mr-3"></i> Chat on WhatsApp
+                </a>
+                <a href="tel:+917080792422" class="bg-brandOrange text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-orange-600 transition shadow-xl transform hover:-translate-y-1 flex items-center justify-center border-2 border-transparent">
+                    <i class="fas fa-phone-volume text-2xl mr-3 animate-wiggle"></i> Call Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="tours" class="py-16 bg-brandDarkBg relative">
+        <div class="container mx-auto px-4">
+            
+            <div class="text-center mb-10" data-aos="fade-up">
+                <h3 class="text-brandOrange font-bold uppercase tracking-widest mb-2">Explore India</h3>
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Popular Tour Packages</h2>
+                <div class="w-24 h-1 bg-brandOrange mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="relative w-full h-[600px] rounded-2xl overflow-hidden shadow-2xl border-4 border-white/10 group">
+                
+                <div class="tour-slide active">
+                    <img src="photo/guru13.png" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-8 md:p-16">
+                        <div class="tour-content max-w-3xl">
+                            <span class="text-brandOrange font-bold uppercase tracking-widest mb-2 block"> Tourist Journey</span>
+                            <h2 class="text-4xl md:text-6xl font-bold text-white mb-4 leading-tight">Babatpur Airport</h2>
+                            <p class="text-gray-200 text-lg md:text-xl mb-8 leading-relaxed">
+                                Experience the Airport of Varanasi and our services start from here.
+                            </p>
+                            <a href="https://wa.me/917080792422?text=Booking%20Inquiry%20for%20Airport%20Pickup" class="bg-brandOrange text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-white hover:text-brandOrange transition inline-block">Book This Tour</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tour-slide">
+                    <img src="photo/Namo.jpeg" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-8 md:p-16">
+                        <div class="tour-content max-w-3xl">
+                            <span class="text-brandOrange font-bold uppercase tracking-widest mb-2 block">Spiritual Journey</span>
+                            <h2 class="text-4xl md:text-6xl font-bold text-white mb-4 leading-tight">Kashi Darshan</h2>
+                            <p class="text-gray-200 text-lg md:text-xl mb-8 leading-relaxed">
+                                Experience the divinity of the oldest living city. Visit Kashi Vishwanath Temple, witness the mesmerizing Ganga Aarti, and explore the ancient Ghats.
+                            </p>
+                            <a href="https://wa.me/917080792422?text=Booking%20Inquiry%20for%20Kashi%20Tour" class="bg-brandOrange text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-white hover:text-brandOrange transition inline-block">Book This Tour</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tour-slide">
+                    <img src="photo/Rammandir.png" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-8 md:p-16">
+                        <div class="tour-content max-w-3xl">
+                            <span class="text-brandOrange font-bold uppercase tracking-widest mb-2 block">Heritage & Devotion</span>
+                            <h2 class="text-4xl md:text-6xl font-bold text-white mb-4 leading-tight">Ram Mandir Ayodhya</h2>
+                            <p class="text-gray-200 text-lg md:text-xl mb-8 leading-relaxed">
+                                Visit the birthplace of Lord Rama. Darshan at the grand Ram Mandir, Hanumangarhi, and Saryu River Ghats.
+                            </p>
+                            <a href="https://wa.me/917080792422?text=Booking%20Inquiry%20for%20Ayodhya%20Tour" class="bg-brandOrange text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-white hover:text-brandOrange transition inline-block">Book This Tour</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tour-slide">
+                    <img src="photo/Sangam.jpg" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-8 md:p-16">
+                        <div class="tour-content max-w-3xl">
+                            <span class="text-brandOrange font-bold uppercase tracking-widest mb-2 block">Holy Confluence</span>
+                            <h2 class="text-4xl md:text-6xl font-bold text-white mb-4 leading-tight">Triveni Sangam</h2>
+                            <p class="text-gray-200 text-lg md:text-xl mb-8 leading-relaxed">
+                                Take a holy dip at the Sangam of Ganga, Yamuna, and Saraswati. The eternal spiritual hub of the Kumbh Mela in Prayagraj.
+                            </p>
+                            <a href="https://wa.me/917080792422?text=Booking%20Inquiry%20for%20Sangam%20Tour" class="bg-brandOrange text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-white hover:text-brandOrange transition inline-block">Book This Tour</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tour-slide">
+                    <img src="photo/Bodhgaya.jpg" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-8 md:p-16">
+                        <div class="tour-content max-w-3xl">
+                            <span class="text-brandOrange font-bold uppercase tracking-widest mb-2 block">Path to Enlightenment</span>
+                            <h2 class="text-4xl md:text-6xl font-bold text-white mb-4 leading-tight">Bodhgaya Tour</h2>
+                            <p class="text-gray-200 text-lg md:text-xl mb-8 leading-relaxed">
+                                Visit the Mahabodhi Temple and the Bodhi Tree where Lord Buddha attained enlightenment. A serene pilgrimage for peace seekers.
+                            </p>
+                            <a href="https://wa.me/917080792422?text=Booking%20Inquiry%20for%20Bodhgaya%20Tour" class="bg-brandOrange text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-white hover:text-brandOrange transition inline-block">Book This Tour</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tour-slide">
+                    <img src="photo/Sarnath.jpg" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-8 md:p-16">
+                        <div class="tour-content max-w-3xl">
+                            <span class="text-brandOrange font-bold uppercase tracking-widest mb-2 block">Buddhist Heritage</span>
+                            <h2 class="text-4xl md:text-6xl font-bold text-white mb-4 leading-tight">Sarnath Tour</h2>
+                            <p class="text-gray-200 text-lg md:text-xl mb-8 leading-relaxed">
+                                Visit the sacred land where Lord Buddha delivered his first sermon. Explore Dhamek Stupa, Ashoka Pillar, and ancient monasteries.
+                            </p>
+                            <a href="https://wa.me/917080792422?text=Booking%20Inquiry%20for%20Sarnath%20Tour" class="bg-brandOrange text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-white hover:text-brandOrange transition inline-block">
+                                Book This Tour
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tour-slide">
+                    <img src="photo/Vindhyachal.jpg" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-8 md:p-16">
+                        <div class="tour-content max-w-3xl">
+                            <span class="text-brandOrange font-bold uppercase tracking-widest mb-2 block">Shakti Peeth</span>
+                            <h2 class="text-4xl md:text-6xl font-bold text-white mb-4 leading-tight">Vindhyachal Tour</h2>
+                            <p class="text-gray-200 text-lg md:text-xl mb-8 leading-relaxed">
+                                Seek blessings at the Vindhyavasini Devi Temple, nestled in the Vindhya ranges. A powerful Shakti Peeth pilgrimage.
+                            </p>
+                            <a href="https://wa.me/917080792422?text=Booking%20Inquiry%20for%20Vindhyachal%20Tour" class="bg-brandOrange text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-white hover:text-brandOrange transition inline-block">Book This Tour</a>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="moveTourSlide(-1)" class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-brandOrange backdrop-blur text-white p-4 rounded-full transition z-20 group-hover:opacity-100 opacity-50"><i class="fas fa-chevron-left text-xl"></i></button>
+                <button onclick="moveTourSlide(1)" class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-brandOrange backdrop-blur text-white p-4 rounded-full transition z-20 group-hover:opacity-100 opacity-50"><i class="fas fa-chevron-right text-xl"></i></button>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h3 class="text-brandOrange font-bold uppercase tracking-widest mb-2">Best Rates in Varanasi</h3>
+                <h2 class="text-3xl md:text-4xl font-bold text-brandDarkBg">Transparent Tariff Card</h2>
+                <div class="w-24 h-1 bg-brandOrange mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:-translate-y-2 transition duration-300 border border-gray-100" data-aos="fade-up" data-aos-delay="100">
+                    <div class="bg-brandDarkBg p-4 text-center">
+                        <h3 class="text-xl font-bold text-white">Maruti Swift Dzire</h3>
+                        <p class="text-brandOrange text-sm">Comfort Sedan (4+1)</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-center mb-6">
+                             <img src="img/dzire new.jpeg" alt="Dzire" class="h-32 object-contain" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/2/29/2017_Maruti_Suzuki_Dzire_ZDi_AMT.jpg'">
+                        </div>
+                        <ul class="space-y-4 text-gray-600 text-sm font-medium">
+                            <li class="flex justify-between border-b pb-2">
+                                <span><i class="fas fa-plane-arrival text-brandOrange mr-2"></i>Airport Pick/Drop</span>
+                                <span class="font-bold text-brandDark">₹ 900</span>
+                            </li>
+                            <li class="flex justify-between border-b pb-2">
+                                <span><i class="fas fa-city text-brandOrange mr-2"></i>City (8Hr/80Km)</span>
+                                <span class="font-bold text-brandDark">₹ 2,500</span>
+                            </li>
+                            <li class="flex justify-between border-b pb-2">
+                                <span><i class="fas fa-route text-brandOrange mr-2"></i>Outstation (12Hr/120Km)</span>
+                                <span class="font-bold text-brandDark">₹ 3,000</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span><i class="fas fa-road text-brandOrange mr-2"></i>Per Km Rate</span>
+                                <span class="font-bold text-brandDark">₹ 12 / km</span>
+                            </li>
+                        </ul>
+                        <a href="https://wa.me/917080792422?text=Booking%20Inquiry%20for%20Swift%20Dzire" class="block w-full text-center bg-brandOrange text-white mt-6 py-3 rounded-lg font-bold hover:bg-orange-600 transition">Book Dzire</a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:-translate-y-2 transition duration-300 border border-gray-100" data-aos="fade-up" data-aos-delay="200">
+                    <div class="bg-brandDarkBg p-4 text-center">
+                        <h3 class="text-xl font-bold text-white">Maruti Ertiga</h3>
+                        <p class="text-brandOrange text-sm">Spacious MUV (6+1)</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-center mb-6">
+                             <img src="img/ertiga1.jpeg" alt="Ertiga" class="h-32 object-contain" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/e/e6/Maruti_Suzuki_Ertiga_%28second_generation%29_IMG_3661.jpg'">
+                        </div>
+                        <ul class="space-y-4 text-gray-600 text-sm font-medium">
+                            <li class="flex justify-between border-b pb-2">
+                                <span><i class="fas fa-plane-arrival text-brandOrange mr-2"></i>Airport Pick/Drop</span>
+                                <span class="font-bold text-brandDark">₹ 1,200</span>
+                            </li>
+                            <li class="flex justify-between border-b pb-2">
+                                <span><i class="fas fa-city text-brandOrange mr-2"></i>City (8Hr/80Km)</span>
+                                <span class="font-bold text-brandDark">₹ 3,000</span>
+                            </li>
+                            <li class="flex justify-between border-b pb-2">
+                                <span><i class="fas fa-route text-brandOrange mr-2"></i>Outstation (12Hr/120Km)</span>
+                                <span class="font-bold text-brandDark">₹ 3,500</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span><i class="fas fa-road text-brandOrange mr-2"></i>Per Km Rate</span>
+                                <span class="font-bold text-brandDark">₹ 15 / km</span>
+                            </li>
+                        </ul>
+                        <a href="https://wa.me/917080792422?text=Booking%20Inquiry%20for%20Ertiga" class="block w-full text-center bg-brandOrange text-white mt-6 py-3 rounded-lg font-bold hover:bg-orange-600 transition">Book Ertiga</a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:-translate-y-2 transition duration-300 border-2 border-brandOrange relative" data-aos="fade-up" data-aos-delay="300">
+                    <div class="absolute top-0 right-0 bg-brandOrange text-white text-xs font-bold px-3 py-1 rounded-bl-lg z-10">POPULAR</div>
+                    <div class="bg-brandDarkBg p-4 text-center">
+                        <h3 class="text-xl font-bold text-white">Toyota Innova Crysta</h3>
+                        <p class="text-brandOrange text-sm">Premium SUV (6+1)</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-center mb-6">
+                             <img src="photo/innovacrusta.jpg" alt="Innova Crysta" class="h-32 object-contain" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/4/45/Toyota_Innova_Crysta_2.4_ZX_2016.jpg'">
+                        </div>
+                        <ul class="space-y-4 text-gray-600 text-sm font-medium">
+                            <li class="flex justify-between border-b pb-2">
+                                <span><i class="fas fa-plane-arrival text-brandOrange mr-2"></i>Airport Pick/Drop</span>
+                                <span class="font-bold text-brandDark">₹ 1,400</span>
+                            </li>
+                            <li class="flex justify-between border-b pb-2">
+                                <span><i class="fas fa-city text-brandOrange mr-2"></i>City (8Hr/80Km)</span>
+                                <span class="font-bold text-brandDark">₹ 4,000</span>
+                            </li>
+                            <li class="flex justify-between border-b pb-2">
+                                <span><i class="fas fa-route text-brandOrange mr-2"></i>Outstation (12Hr/120Km)</span>
+                                <span class="font-bold text-brandDark">₹ 4,500</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span><i class="fas fa-road text-brandOrange mr-2"></i>Per Km Rate</span>
+                                <span class="font-bold text-brandDark">₹ 20 / km</span>
+                            </li>
+                        </ul>
+                        <a href="https://wa.me/917080792422?text=Booking%20Inquiry%20for%20Innova%20Crysta" class="block w-full text-center bg-brandOrange text-white mt-6 py-3 rounded-lg font-bold hover:bg-orange-600 transition">Book Crysta</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-20 bg-white relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                
+                <div class="w-full lg:w-1/2 relative" data-aos="fade-right">
+                    <div class="relative z-10 rounded-3xl overflow-hidden shadow-2xl border-8 border-gray-100">
+                        <img src="img/Kashi Vishwanath1.jpg" class="w-full h-auto object-cover transform hover:scale-105 transition duration-700">
+                    </div>
+                    <div class="absolute -bottom-10 -right-10 bg-brandBlue text-white p-8 rounded-2xl shadow-2xl z-20 hidden md:block">
+                        <p class="text-4xl font-extrabold mb-1">10+</p>
+                        <p class="text-sm uppercase tracking-widest text-blue-200">Years of Experience</p>
+                    </div>
+                    <div class="absolute -top-10 -left-10 text-brandOrange/20 z-0">
+                        <i class="fas fa-circle text-8xl"></i>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/2" data-aos="fade-left">
+                    <h4 class="text-brandOrange font-bold uppercase tracking-widest mb-3">Who We Are</h4>
+                    <h2 class="text-4xl lg:text-5xl font-bold text-brandDarkBg mb-6 leading-tight">Your Trusted Companion on <br> Every Mile.</h2>
+                    <p class="text-gray-600 mb-8 leading-relaxed text-lg">
+                        Satyam Travel Agency isn't just about booking a car; it's about crafting memories. From the spiritual lanes of Kashi to the historic grounds of Ayodhya, we ensure your journey is safe, comfortable, and full of stories.
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="flex items-start">
+                            <div class="bg-brandOrange/10 p-3 rounded-xl mr-4 text-brandOrange text-2xl"><i class="fas fa-shield-alt"></i></div>
+                            <div>
+                                <h5 class="font-bold text-lg text-brandDarkBg">Safety First</h5>
+                                <p class="text-sm text-gray-500">Sanitized cars & verified drivers.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-brandOrange/10 p-3 rounded-xl mr-4 text-brandOrange text-2xl"><i class="fas fa-clock"></i></div>
+                            <div>
+                                <h5 class="font-bold text-lg text-brandDarkBg">Punctuality</h5>
+                                <p class="text-sm text-gray-500">Always on time, every time.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-brandOrange/10 p-3 rounded-xl mr-4 text-brandOrange text-2xl"><i class="fas fa-star"></i></div>
+                            <div>
+                                <h5 class="font-bold text-lg text-brandDarkBg">Premium Fleet</h5>
+                                <p class="text-sm text-gray-500">Top-condition AC vehicles.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-brandOrange/10 p-3 rounded-xl mr-4 text-brandOrange text-2xl"><i class="fas fa-headset"></i></div>
+                            <div>
+                                <h5 class="font-bold text-lg text-brandDarkBg">24/7 Support</h5>
+                                <p class="text-sm text-gray-500">We are just a call away.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h3 class="text-brandOrange font-bold uppercase tracking-widest mb-2">What We Offer</h3>
+                <h2 class="text-3xl md:text-4xl font-bold text-brandDarkBg">Our Core Travel Services</h2>
+                 <div class="w-24 h-1 bg-brandOrange mx-auto mt-4 rounded-full"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-300 group border border-gray-100" data-aos="fade-up">
+                    <div class="w-16 h-16 bg-brandBlue/10 text-brandBlue rounded-xl flex items-center justify-center text-3xl mb-6 group-hover:bg-brandOrange group-hover:text-white transition duration-300"><i class="fas fa-taxi"></i></div>
+                    <h3 class="text-xl font-bold text-brandDarkBg mb-3 group-hover:text-brandOrange transition">City & Outstation Taxi</h3>
+                    <p class="text-gray-600 leading-relaxed">Affordable AC cabs for local usage or one-way/round-trip outstation journeys to Allahabad, Ayodhya, etc.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-300 group border border-gray-100" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-brandBlue/10 text-brandBlue rounded-xl flex items-center justify-center text-3xl mb-6 group-hover:bg-brandOrange group-hover:text-white transition duration-300"><i class="fas fa-plane-arrival"></i></div>
+                    <h3 class="text-xl font-bold text-brandDarkBg mb-3 group-hover:text-brandOrange transition">Airport Transfers</h3>
+                    <p class="text-gray-600 leading-relaxed">Reliable and punctual pickups and drops to Lal Bahadur Shastri International Airport (VNS).</p>
+                </div>
+                 <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-300 group border border-gray-100" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-brandBlue/10 text-brandBlue rounded-xl flex items-center justify-center text-3xl mb-6 group-hover:bg-brandOrange group-hover:text-white transition duration-300"><i class="fas fa-gopuram"></i></div>
+                    <h3 class="text-xl font-bold text-brandDarkBg mb-3 group-hover:text-brandOrange transition">Pilgrimage Tours</h3>
+                    <p class="text-gray-600 leading-relaxed">Customized packages for Kashi Vishwanath, Sarnath, Vindhyachal, and the Buddhist Circuit.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-brandDarkBg text-white">
+        <div class="container mx-auto px-6">
+             <div class="text-center mb-16" data-aos="fade-up">
+                <h3 class="text-brandOrange font-bold uppercase tracking-widest mb-2">Testimonials</h3>
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Trusted by Thousands</h2>
+                <div class="w-24 h-1 bg-brandOrange mx-auto mt-4 rounded-full"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-brandDark/50 p-8 rounded-2xl border border-gray-700" data-aos="fade-up">
+                    <div class="flex text-brandOrange mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="text-gray-300 mb-6 italic">"Excellent experience! We hired the Innova Crysta for a 3-day trip to Ayodhya and Prayagraj."</p>
+                    <h5 class="font-bold text-white">- Rahul Khanna</h5>
+                </div>
+                 <div class="bg-brandDark/50 p-8 rounded-2xl border border-gray-700" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex text-brandOrange mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="text-gray-300 mb-6 italic">"Very punctual airport pickup at 2 AM. The booking process was smooth and the pricing is best."</p>
+                    <h5 class="font-bold text-white">- Priya Desai</h5>
+                </div>
+                 <div class="bg-brandDark/50 p-8 rounded-2xl border border-gray-700" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex text-brandOrange mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="text-gray-300 mb-6 italic">"Best pricing for Tempo Traveller in Varanasi. We booked for our family pilgrimage."</p>
+                    <h5 class="font-bold text-white">- Amit Singh</h5>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="bg-black text-gray-300 pt-20 pb-10 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brandBlue/10 via-black to-black"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div>
+                    <a href="#" class="text-3xl font-extrabold text-white flex items-center tracking-tight mb-6">
+                        <i class="fas fa-route text-brandOrange mr-2 animate-bounce"></i> SATYAM<span class="text-brandOrange">TRIP</span>
+                    </a>
+                    <p class="text-gray-400 leading-relaxed mb-6">Providing safe, reliable, and premium taxi services in Varanasi. Your comfort is our priority for local and outstation travel.</p>
+                    
+                    <h5 class="text-white font-bold mb-4">Follow Us</h5>
+                    <div class="flex space-x-4">
+                        <a href="#" class="group w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gradient-to-br hover:from-blue-600 hover:to-blue-400 hover:text-white transition-all duration-300 shadow-lg transform hover:scale-110">
+                            <i class="fab fa-facebook-f group-hover:animate-pulse"></i>
+                        </a>
+                        <a href="#" class="group w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gradient-to-br hover:from-pink-500 hover:to-orange-400 hover:text-white transition-all duration-300 shadow-lg transform hover:scale-110">
+                            <i class="fab fa-instagram group-hover:animate-spin"></i>
+                        </a>
+                        <a href="https://wa.me/917080792422" class="group w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gradient-to-br hover:from-green-500 hover:to-green-400 hover:text-white transition-all duration-300 shadow-lg transform hover:scale-110">
+                            <i class="fab fa-whatsapp group-hover:animate-pulse"></i>
+                        </a>
+                        <a href="#" class="group w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gradient-to-br hover:from-red-600 hover:to-red-500 hover:text-white transition-all duration-300 shadow-lg transform hover:scale-110">
+                            <i class="fab fa-youtube group-hover:animate-bounce"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-xl font-bold text-white mb-6 border-b-2 border-brandOrange inline-block pb-1">Quick Links</h4>
+                    <ul class="space-y-4">
+                        <li><a href="#home" class="hover:text-brandOrange hover:translate-x-2 transition-transform duration-300 block">Home</a></li>
+                        <li><a href="#about" class="hover:text-brandOrange hover:translate-x-2 transition-transform duration-300 block">About Us</a></li>
+                        <li><a href="#tours" class="hover:text-brandOrange hover:translate-x-2 transition-transform duration-300 block">Tours</a></li>
+                        <li><a href="#pricing" class="hover:text-brandOrange hover:translate-x-2 transition-transform duration-300 block">Pricing</a></li>
+                        <li><a href="#contact" class="hover:text-brandOrange hover:translate-x-2 transition-transform duration-300 block">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-xl font-bold text-white mb-6 border-b-2 border-brandOrange inline-block pb-1">Our Services</h4>
+                    <ul class="space-y-4">
+                        <li class="hover:text-brandOrange transition duration-300 cursor-pointer">Airport Transfers</li>
+                        <li class="hover:text-brandOrange transition duration-300 cursor-pointer">Outstation Cabs</li>
+                        <li class="hover:text-brandOrange transition duration-300 cursor-pointer">Tempo Traveller Rental</li>
+                        <li class="hover:text-brandOrange transition duration-300 cursor-pointer">Kashi Darshan Tours</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-xl font-bold text-white mb-6 border-b-2 border-brandOrange inline-block pb-1">Get In Touch</h4>
+                    <ul class="space-y-6">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1.5 mr-4 text-brandOrange animate-pulse"></i>
+                            <span>Babatpur, Near LBS Airport, Varanasi</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-4 text-brandOrange"></i>
+                            <a href="tel:+917080792422" class="hover:text-brandOrange transition">+91 7080792422</a>
+                        </li>
+                         <li class="flex items-center">
+                            <i class="fas fa-envelope mr-4 text-brandOrange"></i>
+                            <a href="mailto:satyamtri2025@gmail.com" class="hover:text-brandOrange transition">satyamtri2025@gmail.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 mt-12 text-center text-sm text-gray-500">
+                <p>&copy; 2025 Satyam Trips | All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, offset: 50 });
+
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => { menu.classList.toggle('hidden'); });
+
+        /* ========================
+           HERO SLIDER LOGIC
+           ======================== */
+        let heroIndex = 0;
+        const heroSlides = document.querySelectorAll('.hero-slide');
+        
+        function moveHeroSlide(n) {
+            heroSlides.forEach(slide => slide.classList.remove('active'));
+            heroIndex = (heroIndex + n + heroSlides.length) % heroSlides.length;
+            heroSlides[heroIndex].classList.add('active');
+        }
+        
+        // Auto Play Hero
+        const heroInterval = setInterval(() => { moveHeroSlide(1); }, 5000);
+
+
+        /* ========================
+           TOUR SLIDER LOGIC
+           ======================== */
+        let tourIndex = 0;
+        const tourSlides = document.querySelectorAll('.tour-slide');
+        
+        function moveTourSlide(n) {
+            // Remove active class from current
+            tourSlides.forEach(slide => slide.classList.remove('active'));
+            
+            // Calculate new index
+            tourIndex = (tourIndex + n + tourSlides.length) % tourSlides.length;
+            
+            // Add active class to new slide
+            tourSlides[tourIndex].classList.add('active');
+        }
+
+        // Auto Play Tours
+        const tourInterval = setInterval(() => { moveTourSlide(1); }, 4000);
+    </script>
+    
+    <style type="text/tailwindcss">
+        @theme { extend: { animation: { wiggle: 'wiggle 1s ease-in-out infinite' }, keyframes: { wiggle: { '0%, 100%': { transform: 'rotate(-3deg)' }, '50%': { transform: 'rotate(3deg)' } } } } }
+    </style>
+</body>
+</html>
